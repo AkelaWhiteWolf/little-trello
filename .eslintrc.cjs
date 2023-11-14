@@ -16,5 +16,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'prettier/prettier': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
 };
