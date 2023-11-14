@@ -18,6 +18,11 @@ export const CandidateStatusColumn: React.FC<Props> = observer(
     } = useStores();
     const candidatesOfThisColumn = getCandidatesByStatus(order);
 
+    const renderCandidates = () =>
+      candidatesOfThisColumn.map((fullInfo) => (
+        <CandidateCard key={fullInfo.candidate.id} cardData={fullInfo} />
+      ));
+
     const onDrop = (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       const id = Number(event.dataTransfer.getData('id'));
@@ -44,19 +49,7 @@ export const CandidateStatusColumn: React.FC<Props> = observer(
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
         >
-          {candidatesOfThisColumn.length ? (
-            candidatesOfThisColumn.map(({ candidate, employerStatusId }) => (
-              <CandidateCard
-                key={candidate.id}
-                id={candidate.id}
-                firstName={candidate.firstName}
-                lastName={candidate.lastName}
-                order={employerStatusId}
-              />
-            ))
-          ) : (
-            <Empty />
-          )}
+          {candidatesOfThisColumn.length ? renderCandidates() : <Empty />}
         </div>
       </Flex>
     );
