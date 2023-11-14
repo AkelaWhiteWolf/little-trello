@@ -1,6 +1,6 @@
 import React, { DragEvent } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Flex } from 'antd';
+import { Empty, Flex } from 'antd';
 import { candidatesStore } from 'src/store';
 import { getCandidatesByStatus } from 'src/utils';
 import { CandidateCard, ColumnStatusName } from 'src/components';
@@ -41,15 +41,19 @@ export const CandidateStatusColumn: React.FC<Props> = observer(
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
         >
-          {candidatesOfThisColumn.map(({ candidate, employerStatusId }) => (
-            <CandidateCard
-              key={candidate.id}
-              id={candidate.id}
-              firstName={candidate.firstName}
-              lastName={candidate.lastName}
-              order={employerStatusId}
-            />
-          ))}
+          {candidatesOfThisColumn.length ? (
+            candidatesOfThisColumn.map(({ candidate, employerStatusId }) => (
+              <CandidateCard
+                key={candidate.id}
+                id={candidate.id}
+                firstName={candidate.firstName}
+                lastName={candidate.lastName}
+                order={employerStatusId}
+              />
+            ))
+          ) : (
+            <Empty />
+          )}
         </div>
       </Flex>
     );
