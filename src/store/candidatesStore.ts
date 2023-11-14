@@ -9,7 +9,7 @@ class CandidatesStore {
     makeAutoObservable(this);
   }
 
-  changeEmployerStatus(candidateId: number, newStatus: number) {
+  changeEmployerStatus = (candidateId: number, newStatus: number) => {
     const candidate = this.data.find(
       (data) => data.candidate.id === candidateId,
     );
@@ -19,20 +19,21 @@ class CandidatesStore {
     } else {
       console.error('No candidate in store founded');
     }
-  }
+  };
 
-  async getDataFromServer() {
+  getDataFromServer = async () => {
     this.isLoading = true;
     const response = await fetch(
-      'https://650d558fa8b42265ec2c07b8.mockapi.io/kek/candidates',
+      'https://650d558fa8b42265ec2c07b8.mockapi.io/kek/submissions',
     );
     const responseJson = await response.json();
     runInAction(() => {
-      console.log('responseJson', responseJson);
       this.data = responseJson;
       this.isLoading = false;
     });
-  }
+  };
 }
 
-export const candidatesStore = new CandidatesStore();
+const candidatesStore = new CandidatesStore();
+
+export { candidatesStore };

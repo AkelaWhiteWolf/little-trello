@@ -1,0 +1,9 @@
+.candidate-card {
+  background: white;
+  border-radius: 5px;
+  border: 0.5px solid lightgrey;
+  padding: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
