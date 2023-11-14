@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from 'src/styles/CandidatesGrid.module.scss';
 import { COLUMNS_DATA } from 'src/data';
 import { candidatesStore } from 'src/store';
@@ -12,7 +11,7 @@ export const CandidatesGrid = observer(() => {
   }
 
   return (
-    <Flex wrap="nowrap" align="stretch" className={styles['candidates-grid']}>
+    <Flex wrap="nowrap" gap="15px" className={styles['candidates-grid']}>
       {COLUMNS_DATA.map(({ order, name, id }) => (
         <CandidateStatusColumn key={id} order={order} name={name} />
       ))}
