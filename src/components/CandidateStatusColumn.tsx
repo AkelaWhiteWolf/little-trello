@@ -33,7 +33,7 @@ export const CandidateStatusColumn: React.FC<Props> = observer(
     };
     const onDragOver = (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
-      event.currentTarget.style.border = '1px solid lightblue';
+      event.currentTarget.style.border = '2px solid lightblue';
     };
     const onDragLeave = (event: DragEvent<HTMLDivElement>) => {
       event.currentTarget.style.border = '';
