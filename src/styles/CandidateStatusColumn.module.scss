@@ -1,5 +1,9 @@
 .candidate-status-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   background: #F4F4F4;
   padding: 10px;
   border-radius: 15px;
+  height: 100%;
 }
