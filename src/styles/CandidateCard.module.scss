@@ -1,9 +1,22 @@
 .candidate-card {
+  min-height: 100px;
   background: white;
-  border-radius: 5px;
+  border-radius: 15px;
   border: 0.5px solid lightgrey;
   padding: 10px;
   &:hover {
     cursor: pointer;
   }
+}
+
+.top {
+  height: 70%;
+  border-bottom: 1px solid lightgrey;
+}
+.bottom {
+  height: 30%;
+}
+
+.full-name {
+  margin: 0;
 }

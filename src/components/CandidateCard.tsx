@@ -1,6 +1,10 @@
 import React, { DragEvent } from 'react';
+import { Avatar, Flex, Typography } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 import { СandidateCardData } from 'src/types';
 import styles from 'src/styles/CandidateCard.module.scss';
+import { getFirstLettersOfFullname, getTimeDifference } from 'src/utils';
 
 type Props = {
   cardData: СandidateCardData;
@@ -8,10 +12,12 @@ type Props = {
 
 export const CandidateCard: React.FC<Props> = ({
   cardData: {
-    candidate: { firstName, lastName, id },
+    createdAt,
+    candidate: { firstName, lastName, id, color },
   },
 }) => {
-  const fullName = `${firstName} ${lastName}`;
+  const avatarLabel = getFirstLettersOfFullname(`${firstName} ${lastName}`);
+  const createdTimeAgo = getTimeDifference(dayjs(createdAt));
 
   const onDragStart = (event: DragEvent<HTMLDivElement>) => {
     event.dataTransfer.setData('id', String(id));
@@ -27,7 +33,21 @@ export const CandidateCard: React.FC<Props> = ({
       onDragStart={onDragStart}
       onDragOver={onDragOver}
     >
-      {fullName}
+      <Flex align="center" gap="15px" className={styles['top']}>
+        <Avatar style={{ background: color }}>{avatarLabel}</Avatar>
+
+        <Typography.Title level={5} className={styles['full-name']}>
+          {firstName}
+          <br />
+          {lastName}
+        </Typography.Title>
+      </Flex>
+      <Flex justify="space-between" className={styles['bottom']}>
+        <Flex gap="10px" align="center">
+          <ClockCircleOutlined />
+          <Typography.Text>{createdTimeAgo} ago</Typography.Text>
+        </Flex>
+      </Flex>
     </div>
   );
 };
