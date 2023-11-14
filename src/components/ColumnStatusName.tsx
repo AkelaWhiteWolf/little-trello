@@ -4,10 +4,10 @@ import styles from 'src/styles/ColumnStatusName.module.scss';
 
 const { Text } = Typography;
 
-type Props = {
+interface Props {
   name: string;
   count: number;
-};
+}
 
 export const ColumnStatusName: React.FC<Props> = ({ name, count }) => {
   return (

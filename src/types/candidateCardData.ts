@@ -1,4 +1,4 @@
-export type СandidateCardData = {
+export interface СandidateCardData {
   id: number;
   viewed: number;
   favorite: number;
@@ -12,4 +12,4 @@ export type СandidateCardData = {
     lastName: string;
     color: string;
   };
-};
+}

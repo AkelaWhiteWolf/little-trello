@@ -6,9 +6,9 @@ import { СandidateCardData } from 'src/types';
 import styles from 'src/styles/CandidateCard.module.scss';
 import { getFirstLettersOfFullname, getTimeDifference } from 'src/utils';
 
-type Props = {
+interface Props {
   cardData: СandidateCardData;
-};
+}
 
 export const CandidateCard: React.FC<Props> = ({
   cardData: {

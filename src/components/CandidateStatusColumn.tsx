@@ -6,10 +6,10 @@ import { CandidateCard, ColumnStatusName } from 'src/components';
 import styles from 'src/styles/CandidateStatusColumn.module.scss';
 import { useStores } from 'src/contexts';
 
-type Props = {
+interface Props {
   order: number;
   name: string;
-};
+}
 
 export const CandidateStatusColumn: React.FC<Props> = observer(
   ({ order, name }) => {
