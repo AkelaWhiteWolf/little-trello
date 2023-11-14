@@ -1,10 +1,10 @@
 import React, { DragEvent } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Empty, Flex } from 'antd';
-import { candidatesStore } from 'src/store';
 import { getCandidatesByStatus } from 'src/utils';
 import { CandidateCard, ColumnStatusName } from 'src/components';
 import styles from 'src/styles/CandidateStatusColumn.module.scss';
+import { useStores } from 'src/contexts';
 
 type Props = {
   order: number;
@@ -13,13 +13,16 @@ type Props = {
 
 export const CandidateStatusColumn: React.FC<Props> = observer(
   ({ order, name }) => {
+    const {
+      candidates: { changeEmployerStatus },
+    } = useStores();
     const candidatesOfThisColumn = getCandidatesByStatus(order);
 
     const onDrop = (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       const id = Number(event.dataTransfer.getData('id'));
 
-      candidatesStore.changeEmployerStatus(id, order);
+      changeEmployerStatus(id, order);
       // FIXME: better to save previous border
       event.currentTarget.style.border = '';
     };

@@ -1,12 +1,16 @@
 import styles from 'src/styles/CandidatesGrid.module.scss';
 import { COLUMNS_DATA } from 'src/data';
-import { candidatesStore } from 'src/store';
 import { CandidateStatusColumn } from 'src/components/CandidateStatusColumn';
 import { Flex, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
+import { useStores } from 'src/contexts';
 
 export const CandidatesGrid = observer(() => {
-  if (candidatesStore.isLoading) {
+  const {
+    candidates: { isLoading },
+  } = useStores();
+
+  if (isLoading) {
     return <Spin size="large" />;
   }
 
