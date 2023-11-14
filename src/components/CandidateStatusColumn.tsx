@@ -41,7 +41,7 @@ export const CandidateStatusColumn: React.FC<Props> = observer(
 
     return (
       <Flex vertical>
-        <ColumnStatusName name={name} />
+        <ColumnStatusName name={name} count={candidatesOfThisColumn.length} />
 
         <div
           className={styles['candidate-status-column']}

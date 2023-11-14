@@ -13,6 +13,7 @@ type Props = {
 export const CandidateCard: React.FC<Props> = ({
   cardData: {
     createdAt,
+    adChannel,
     candidate: { firstName, lastName, id, color },
   },
 }) => {
@@ -42,7 +43,10 @@ export const CandidateCard: React.FC<Props> = ({
           {lastName}
         </Typography.Title>
       </Flex>
-      <Flex justify="space-between" className={styles['bottom']}>
+      <Flex justify="space-between" align="center" className={styles['bottom']}>
+        <Typography.Text type="success" strong>
+          {adChannel}
+        </Typography.Text>
         <Flex gap="10px" align="center">
           <ClockCircleOutlined />
           <Typography.Text>{createdTimeAgo} ago</Typography.Text>

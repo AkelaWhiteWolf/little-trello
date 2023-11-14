@@ -1,17 +1,21 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Flex, Typography } from 'antd';
 import styles from 'src/styles/ColumnStatusName.module.scss';
 
-const { Title } = Typography;
+const { Text } = Typography;
 
 type Props = {
   name: string;
+  count: number;
 };
 
-export const ColumnStatusName: React.FC<Props> = ({ name }) => {
+export const ColumnStatusName: React.FC<Props> = ({ name, count }) => {
   return (
-    <Title level={5} className={styles['column-status-name']}>
-      {name}
-    </Title>
+    <Flex gap="10px" align="top" className={styles['container']}>
+      <Text className={styles['name']}>{name}</Text>
+      <Text keyboard className={styles['count']}>
+        {count}
+      </Text>
+    </Flex>
   );
 };
