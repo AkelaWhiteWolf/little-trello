@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { ChannelsData } from 'src/types';
+import { ChannelsChartData, ChannelsData } from 'src/types';
+import { candidatesStore } from 'src/store';
 
 class ChannelsStore {
   data: ChannelsData[] = [];
@@ -19,6 +20,29 @@ class ChannelsStore {
       this.data = responseJson;
       this.isLoading = false;
     });
+  };
+
+  getDataForChart = () => {
+    if (!candidatesStore?.data || !this.data) {
+      throw new Error('No channels or candidates data on Store!');
+    } else {
+      const result: ChannelsChartData[] = [];
+
+      this.data.forEach(({ id, name }) => {
+        result.push({ id, name, value: 0 });
+      });
+      candidatesStore.data.forEach(({ channelId }) => {
+        const requiredChannel = result.find(({ id }) => id === channelId);
+
+        if (requiredChannel) {
+          requiredChannel.value++;
+        } else {
+          throw new Error('Candidate id does not match any channel');
+        }
+      });
+
+      return result;
+    }
   };
 }
 
