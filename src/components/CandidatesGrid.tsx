@@ -4,21 +4,11 @@ import { CandidateStatusColumn } from 'src/components/CandidateStatusColumn';
 import { Flex, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useStores } from 'src/contexts';
-import { useEffect } from 'react';
-import { getDataFirstTime } from 'src/utils';
 
 export const CandidatesGrid = observer(() => {
   const {
-    candidates: { isLoading, getDataFromServer, data },
+    candidates: { isLoading },
   } = useStores();
-
-  useEffect(() => {
-    getDataFirstTime({
-      data,
-      isLoading,
-      getDataFunction: getDataFromServer,
-    });
-  }, []);
 
   if (isLoading) {
     return <Spin size="large" />;
