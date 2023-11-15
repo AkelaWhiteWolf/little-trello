@@ -1,5 +1,7 @@
 import { candidatesStore } from 'src/store';
 
-export class RootStore {
+class RootStore {
   candidates = candidatesStore;
 }
+
+export const rootStore = new RootStore();
