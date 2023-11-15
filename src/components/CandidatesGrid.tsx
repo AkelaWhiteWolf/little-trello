@@ -5,6 +5,7 @@ import { Flex, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useStores } from 'src/contexts';
 import { useEffect } from 'react';
+import { getDataFirstTime } from 'src/utils';
 
 export const CandidatesGrid = observer(() => {
   const {
@@ -12,7 +13,11 @@ export const CandidatesGrid = observer(() => {
   } = useStores();
 
   useEffect(() => {
-    if (!data?.length && !isLoading) getDataFromServer();
+    getDataFirstTime({
+      data,
+      isLoading,
+      getDataFunction: getDataFromServer,
+    });
   }, []);
 
   if (isLoading) {
