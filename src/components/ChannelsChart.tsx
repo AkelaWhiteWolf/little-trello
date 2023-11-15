@@ -1,15 +1,10 @@
-import { Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { BarChart, Bar, XAxis } from 'recharts';
 import { useStores } from 'src/contexts';
 import styles from 'src/styles/ChannelsChart.module.scss';
 
 export const ChannelsChart = observer(() => {
-  const { candidates, channels } = useStores();
-
-  if (candidates.isLoading || channels.isLoading) {
-    return <Spin size="large" />;
-  }
+  const { channels } = useStores();
 
   return (
     <div className={styles['chart-container']}>
