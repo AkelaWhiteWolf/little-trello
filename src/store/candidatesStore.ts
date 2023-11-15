@@ -1,8 +1,8 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { action, makeAutoObservable, observable, runInAction } from 'mobx';
 import { СandidateCardData } from 'src/types';
 
 class CandidatesStore {
-  data: СandidateCardData[] = [];
+  data: СandidateCardData[] = observable([]);
   isLoading = false;
 
   constructor() {
@@ -21,6 +21,7 @@ class CandidatesStore {
     }
   };
 
+  @action
   getDataFromServer = async () => {
     this.isLoading = true;
     const response = await fetch(

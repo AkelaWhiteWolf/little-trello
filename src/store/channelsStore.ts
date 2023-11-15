@@ -1,9 +1,9 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, observable, runInAction, action } from 'mobx';
 import { ChannelsChartData, ChannelsData } from 'src/types';
 import { candidatesStore } from 'src/store';
 
 class ChannelsStore {
-  data: ChannelsData[] = [];
+  data: ChannelsData[] = observable([]);
   isLoading = false;
 
   constructor() {
@@ -22,6 +22,7 @@ class ChannelsStore {
     });
   };
 
+  @action
   getDataForChart = () => {
     if (!candidatesStore?.data || !this.data) {
       throw new Error('No channels or candidates data on Store!');
