@@ -8,11 +8,11 @@ import { useEffect } from 'react';
 
 export const CandidatesGrid = observer(() => {
   const {
-    candidates: { isLoading, getDataFromServer },
+    candidates: { isLoading, getDataFromServer, data },
   } = useStores();
 
   useEffect(() => {
-    getDataFromServer();
+    if (!data?.length && !isLoading) getDataFromServer();
   }, []);
 
   if (isLoading) {
