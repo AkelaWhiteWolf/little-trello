@@ -17,5 +17,6 @@ module.exports = {
     ],
     'prettier/prettier': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
   },
 };
