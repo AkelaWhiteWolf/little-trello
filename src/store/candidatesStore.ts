@@ -1,40 +1,46 @@
-import { action, makeAutoObservable, observable, runInAction } from 'mobx';
+import { API } from 'src/api';
 import { СandidateCardData } from 'src/types';
-
-class CandidatesStore {
-  data: СandidateCardData[] = observable([]);
-  isLoading = false;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  changeEmployerStatus = (candidateId: number, newStatus: number) => {
-    const candidate = this.data.find(
-      (data) => data.candidate.id === candidateId,
-    );
-
-    if (candidate) {
-      candidate.employerStatusId = String(newStatus);
-    } else {
-      console.error('No candidate in store founded');
-    }
-  };
-
-  @action
-  getDataFromServer = async () => {
-    this.isLoading = true;
-    const response = await fetch(
-      'https://650d558fa8b42265ec2c07b8.mockapi.io/kek/submissions',
-    );
-    const responseJson = await response.json();
-    runInAction(() => {
-      this.data = responseJson;
-      this.isLoading = false;
-    });
-  };
+import { getObjectDeepCopy } from 'src/utils';
+import { create } from 'zustand';
+interface Store {
+  data: СandidateCardData[];
+  isLoading: boolean;
+}
+interface Actions {
+  changeEmployerStatus: (candidateId: number, newStatus: number) => void;
+  getDataFromServer: () => void;
 }
 
-const candidatesStore = new CandidatesStore();
+export const useCandidatesStore = create<Store & Actions>((set, get) => ({
+  data: [],
+  isLoading: false,
 
-export { candidatesStore };
+  changeEmployerStatus(candidateId: number, newStatus: number) {
+    const state = get();
+
+    const newDataState = state.data.map((candidate) =>
+      candidate.candidate.id === candidateId
+        ? {
+            ...getObjectDeepCopy(candidate),
+            employerStatusId: String(newStatus),
+          }
+        : candidate,
+    );
+
+    set(() => ({
+      data: newDataState,
+    }));
+  },
+
+  async getDataFromServer() {
+    set(() => ({ isLoading: true }));
+
+    const { data: response, error } = await API.get(
+      'https://650d558fa8b42265ec2c07b8.mockapi.io/kek/submissions',
+    );
+
+    if (!error) {
+      set(() => ({ data: response, isLoading: false }));
+    }
+  },
+}));

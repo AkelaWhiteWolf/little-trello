@@ -1,10 +1,9 @@
 import styles from 'src/styles/CandidatesGrid.module.scss';
 import { COLUMNS_DATA } from 'src/data';
-import { CandidateStatusColumn } from 'src/components/CandidateStatusColumn';
+import { CandidateStatusColumn } from 'src/components';
 import { Flex } from 'antd';
-import { observer } from 'mobx-react-lite';
 
-export const CandidatesGrid = observer(() => {
+export const CandidatesGrid = () => {
   return (
     <Flex wrap="nowrap" gap="15px" className={styles['candidates-grid']}>
       {COLUMNS_DATA.map(({ order, name, id }) => (
@@ -12,4 +11,4 @@ export const CandidatesGrid = observer(() => {
       ))}
     </Flex>
   );
-});
+};

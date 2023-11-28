@@ -1,35 +1,40 @@
-import { makeAutoObservable, observable, runInAction, action } from 'mobx';
 import { ChannelsChartData, ChannelsData } from 'src/types';
-import { candidatesStore } from 'src/store';
+import { useCandidatesStore } from 'src/store';
+import { create } from 'zustand';
+import { API } from 'src/api';
+interface State {
+  data: ChannelsData[];
+  isLoading: boolean;
+}
+interface Actions {
+  getDataFromServer: () => void;
+  getDataForChart: () => any[];
+}
 
-class ChannelsStore {
-  data: ChannelsData[] = observable([]);
-  isLoading = false;
+export const useChannelsStore = create<State & Actions>((set, get) => ({
+  data: [],
+  error: undefined,
+  isLoading: false,
+  async getDataFromServer() {
+    set(() => ({ isLoading: true, check: false }));
 
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  getDataFromServer = async () => {
-    this.isLoading = true;
-    const response = await fetch(
+    const { data: response, error } = await API.get(
       'https://650d558fa8b42265ec2c07b8.mockapi.io/kek/channels',
     );
-    const responseJson = await response.json();
-    runInAction(() => {
-      this.data = responseJson;
-      this.isLoading = false;
-    });
-  };
 
-  @action
-  getDataForChart = () => {
-    if (!candidatesStore?.data || !this.data) {
+    if (!error) set(() => ({ data: response, isLoading: false }));
+  },
+
+  getDataForChart() {
+    const { data } = get();
+    const candidatesStore = useCandidatesStore.getState();
+
+    if (!candidatesStore.data || !data) {
       throw new Error('No channels or candidates data on Store!');
     } else {
       const result: ChannelsChartData[] = [];
 
-      this.data.forEach(({ id, name }) => {
+      data.forEach(({ id, name }) => {
         result.push({ id, name, value: 0 });
       });
       candidatesStore.data.forEach(({ channelId }) => {
@@ -44,7 +49,5 @@ class ChannelsStore {
 
       return result;
     }
-  };
-}
-
-export const channelsStore = new ChannelsStore();
+  },
+}));
