@@ -1,13 +1,12 @@
 import { MainPage } from 'src/pages';
-import { rootStore } from 'src/store';
-import { RootStoreContext } from 'src/contexts';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import './global-styles.scss?inline';
 
 const App = () => {
   return (
-    <RootStoreContext.Provider value={rootStore}>
+    <QueryClientProvider client={new QueryClient()}>
       <MainPage />
-    </RootStoreContext.Provider>
+    </QueryClientProvider>
   );
 };
 
