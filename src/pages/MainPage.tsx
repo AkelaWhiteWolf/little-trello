@@ -1,19 +1,23 @@
-import { useEffect } from 'react';
 import React from 'react';
 import { CandidatesGrid, ChannelsChart } from 'src/components';
 import { Spin } from 'antd';
+import { useQuery } from '@tanstack/react-query';
 import { useCandidatesStore, useChannelsStore } from 'src/store';
 
 export const MainPage: React.FC = () => {
   const candidates = useCandidatesStore();
   const channels = useChannelsStore();
 
-  useEffect(() => {
-    candidates.getDataFromServer();
-    channels.getDataFromServer();
-  }, []);
+  const { isFetched: candidatesFetched } = useQuery({
+    queryKey: ['candidates'],
+    queryFn: candidates.getDataFromServer,
+  });
+  const { isFetched: channelsFetched } = useQuery({
+    queryKey: ['channels'],
+    queryFn: channels.getDataFromServer,
+  });
 
-  if (candidates.isLoading || channels.isLoading) {
+  if (!candidatesFetched || !channelsFetched) {
     return <Spin size="large" />;
   }
 
